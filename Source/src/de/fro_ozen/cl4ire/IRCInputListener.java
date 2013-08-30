@@ -15,4 +15,5 @@ public abstract class IRCInputListener {
 			e.printStackTrace();
 		}
 	}
+	
 }

@@ -58,7 +58,7 @@ public class Connection extends Thread{
 
 			//Initial loop in order to finish connecting
 			while((connectionInput = connectionReader.readLine()) != null){
-				System.out.println("Input: " + connectionInput);
+				System.out.println(">> " + connectionInput);
 
 				//Return the pong to stay connected
 				if(connectionInput.startsWith("PING")){
@@ -85,7 +85,6 @@ public class Connection extends Thread{
 					//Ready to join channels
 					else if(connectionInput.equals(":" + nickName + " MODE " + nickName +" :+i")){
 						joinChannels();
-						//						connectionWriter.write("PING Etromora\r\n");
 						connectionWriter.flush();
 						createInputListener();
 					}
