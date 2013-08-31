@@ -87,6 +87,7 @@ public class Connection extends Thread{
 						joinChannels();
 						connectionWriter.flush();
 						createInputListener();
+						if(connectionInputListener != null)connectionInputListener.setIRCWriter(connectionWriter);
 					}
 				}
 				

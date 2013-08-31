@@ -13,6 +13,8 @@ public abstract class AnalyseInputListener extends IRCInputListener{
 			String restText = IRCInput.substring(IRCInput.indexOf(channel) + channel.length() + 2);
 			
 			handlePrivmsgInput(channel, originUserName, restText);
+			
+			
 		}
 		
 	}

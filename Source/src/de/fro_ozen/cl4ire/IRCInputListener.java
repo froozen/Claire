@@ -4,16 +4,24 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 public abstract class IRCInputListener {
-	private BufferedWriter IRCWriter;
-	
+	BufferedWriter IRCWriter;
+
 	public abstract void handleInput(String IRCInput);
-	
+
 	public void writeMessage(String target, String message){
-		try {
-			IRCWriter.write("PRIVMSG " + target + " :" + message + "\r\n");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(IRCWriter != null){
+			try {
+				IRCWriter.write("PRIVMSG " + target + " :" + message + "\r\n");
+				IRCWriter.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		else System.out.println("IRCWriter is missing!");
 	}
-	
+
+	public void setIRCWriter(BufferedWriter IRCWriter){
+		this.IRCWriter = IRCWriter;
+	}
+
 }
