@@ -92,7 +92,7 @@ public class Connection extends Thread{
 				}
 				
 				//Handle the input via connectionInputListener
-				else{
+				else if(!connectionInput.contains("PONG")){
 					connectionInputListener.handleInput(connectionInput);
 				}
 
