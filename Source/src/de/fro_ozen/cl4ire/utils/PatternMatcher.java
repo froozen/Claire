@@ -1,6 +1,5 @@
 package de.fro_ozen.cl4ire.utils;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
