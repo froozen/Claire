@@ -2,6 +2,7 @@ package de.fro_ozen.cl4ire;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public abstract class IRCInputListener {
 	public BufferedWriter IRCWriter;
@@ -9,13 +10,17 @@ public abstract class IRCInputListener {
 	public void handleInput(String IRCInput) {
 		String[] inputSplit = IRCInput.split(" " );
 		boolean number = true;
+		
+		ArrayList<String> avoidSignalType = new ArrayList<String>();
+		avoidSignalType.add("PONG");
+		avoidSignalType.add("NOTICE");
 
 		String signalType = inputSplit[1];
 
 		try{Integer.parseInt(signalType);}
 		catch(NumberFormatException nfe){number = false;}
 
-		if(!number){
+		if(!number && !avoidSignalType.contains(signalType)){
 			String channel = inputSplit[2];
 			String originUserName = inputSplit[0].substring(1, inputSplit[0].indexOf('!'));
 
@@ -24,7 +29,7 @@ public abstract class IRCInputListener {
 				handlePrivmsgInput(channel, originUserName, restText);
 			}
 
-			else if(inputSplit[1].equals("JOIN")){
+			else if(signalType.equals("JOIN")){
 				UserManager.createUser(originUserName);
 				try {
 					IRCWriter.write("WHOIS " +  originUserName + "\r\n");
@@ -33,14 +38,22 @@ public abstract class IRCInputListener {
 					e.printStackTrace();
 				}
 			}
+			
+			else if(signalType.equals("PART")){
+				UserManager.removeUserChannel(originUserName, channel);
+			}
+			
+			else if(signalType.equals("QUIT")){
+				UserManager.removeUser(originUserName);
+			}
 		}
 		else{
 			if(signalType.equals("319")){
-				String[] channels = new String[inputSplit.length - 4];
+				ArrayList<String> channels = new ArrayList<String>();
 
 				for(int i = 4; i<inputSplit.length; i++){
-					if(i == 4)channels[0] = inputSplit[4].substring(1);
-					else channels[i-4] = inputSplit[i];
+					if(i == 4)channels.add(inputSplit[4].substring(1));
+					else channels.add(inputSplit[i]);
 				}
 
 				UserManager.setUserChannels(inputSplit[3], channels);
