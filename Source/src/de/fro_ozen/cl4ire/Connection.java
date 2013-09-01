@@ -10,9 +10,9 @@ import java.net.Socket;
 import de.fro_ozen.cl4ire.inputlisteners.ClaireInputListener;
 
 public class Connection extends Thread{
-	private String nickName, serverName;
+	public  String nickName, serverName;
 	private String connectionInput;
-	private String[] channels;
+	public String[] channels;
 	private Socket connectionSocket;
 	private BufferedWriter connectionWriter;
 	private BufferedReader connectionReader;

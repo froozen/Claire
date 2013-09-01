@@ -14,7 +14,7 @@ public abstract class BaseCommand {
 		} catch (IOException e) {e.printStackTrace();}
 	}
 	
-	public void writeCommand(String target, String command, BufferedWriter IRCWriter){
+	public void writeCommand(String command, BufferedWriter IRCWriter){
 		try {
 			IRCWriter.write( command + "\r\n");
 			IRCWriter.flush();
