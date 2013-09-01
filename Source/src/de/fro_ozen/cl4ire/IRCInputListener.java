@@ -6,11 +6,16 @@ import java.util.ArrayList;
 
 public abstract class IRCInputListener {
 	public BufferedWriter IRCWriter;
+	public String ownNickName;
+	private boolean firstJoin = true;
+
+	public abstract void handlePrivmsgInput(String channel, String originUserName, String restText);
+	public abstract void handleJoinInput(String channel, String originUserName);
 
 	public void handleInput(String IRCInput) {
 		String[] inputSplit = IRCInput.split(" " );
 		boolean number = true;
-		
+
 		ArrayList<String> avoidSignalType = new ArrayList<String>();
 		avoidSignalType.add("PONG");
 		avoidSignalType.add("NOTICE");
@@ -30,19 +35,22 @@ public abstract class IRCInputListener {
 			}
 
 			else if(signalType.equals("JOIN")){
-				UserManager.createUser(originUserName);
-				try {
-					IRCWriter.write("WHOIS " +  originUserName + "\r\n");
-					IRCWriter.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
+				if(firstJoin){
+					ownNickName = originUserName;
+					firstJoin = false;
 				}
+				if(!originUserName.equals(ownNickName)){
+					UserManager.createUser(originUserName);
+					writeCommand("WHOIS " + originUserName);
+					handleJoinInput(channel, originUserName);
+				}
+
 			}
-			
+
 			else if(signalType.equals("PART")){
 				UserManager.removeUserChannel(originUserName, channel);
 			}
-			
+
 			else if(signalType.equals("QUIT")){
 				UserManager.removeUser(originUserName);
 			}
@@ -58,15 +66,41 @@ public abstract class IRCInputListener {
 
 				UserManager.setUserChannels(inputSplit[3], channels);
 			}
+
+			if(signalType.equals("353")){
+				ArrayList<String> names = new ArrayList<String>();
+
+				for(int i = 5; i<inputSplit.length; i++){
+					if(i == 4)names.add(inputSplit[4].substring(1));
+					else names.add(inputSplit[i]);
+				}
+
+				for(String name:names){
+					if(!name.equals(ownNickName)){
+						UserManager.createUser(name);
+						writeCommand("WHOIS " + name);
+					}
+				}
+			}
 		}
 	}
-
-	public abstract void handlePrivmsgInput(String channel, String originUserName, String restText);
 
 	public void writeMessage(String target, String message){
 		if(IRCWriter != null){
 			try {
 				IRCWriter.write("PRIVMSG " + target + " :" + message + "\r\n");
+				IRCWriter.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else System.out.println("IRCWriter is missing!");
+	}
+
+	public void writeCommand(String command){
+		if(IRCWriter != null){
+			try {
+				IRCWriter.write(command + "\r\n");
 				IRCWriter.flush();
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -8,4 +8,8 @@ public class ClaireInputListener extends IRCInputListener{
 		
 	}
 
+	public void handleJoinInput(String channel, String originUserName) {
+		writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ".");
+	}
+
 }
