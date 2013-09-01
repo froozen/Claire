@@ -31,6 +31,7 @@ public abstract class IRCInputListener {
 
 			if(signalType.equals("PRIVMSG")){
 				String restText = IRCInput.substring(IRCInput.indexOf(channel) + channel.length() + 2);
+				if(channel.equals(ownNickName))channel = originUserName;
 				handlePrivmsgInput(channel, originUserName, restText);
 			}
 

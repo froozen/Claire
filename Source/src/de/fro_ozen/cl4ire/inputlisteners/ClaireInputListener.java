@@ -3,13 +3,13 @@ package de.fro_ozen.cl4ire.inputlisteners;
 import java.util.ArrayList;
 
 import de.fro_ozen.cl4ire.IRCInputListener;
+import de.fro_ozen.cl4ire.UserManager;
 import de.fro_ozen.cl4ire.commands.ClaireCommandHandler;
 
 public class ClaireInputListener extends IRCInputListener{
 	private final String commandStarter = "[";
 
 	public void handlePrivmsgInput(String channel, String originUserName, String restText) {
-		System.out.println(restText.startsWith(commandStarter));
 		if(restText.startsWith(commandStarter)){
 			restText = restText.substring(commandStarter.length());
 			String[] splitText = restText.split(" ");
@@ -23,6 +23,18 @@ public class ClaireInputListener extends IRCInputListener{
 			else args = null;
 			
 			ClaireCommandHandler.runCommand(splitText[0], channel, originUserName, args, IRCWriter);
+		}
+		else{
+			if(!channel.equals(originUserName)){
+				if(UserManager.isAfk(originUserName)){
+					UserManager.setAfk(originUserName, false);
+					if(UserManager.getUserChannels(originUserName) != null){
+						for(String channelName:UserManager.getUserChannels(originUserName)){
+							writeMessage(channelName, originUserName + " is back!");
+						}
+					}
+				}
+			}
 		}
 	}
 

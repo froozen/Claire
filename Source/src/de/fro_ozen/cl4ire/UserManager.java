@@ -12,6 +12,20 @@ public class UserManager {
 		System.out.println("Created user: " + nickName);
 	}
 	
+	public static boolean isAfk(String nickName){
+		if(users.containsKey(nickName))return users.get(nickName).afk;
+		return false;
+	}
+	
+	public static void setAfk(String nickName, boolean bool){
+		if(users.containsKey(nickName))users.get(nickName).afk = bool;
+	}
+	
+	public static ArrayList<String> getUserChannels(String nickName){
+		if(users.containsKey(nickName))return users.get(nickName).channels;
+		return null;
+	}
+	
 	public static void setUserChannels(String nickName, ArrayList<String> channels){
 		User target = users.get(nickName);
 		if(target!=null)target.channels = channels;

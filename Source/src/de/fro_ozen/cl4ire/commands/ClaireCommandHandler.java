@@ -8,7 +8,6 @@ public class ClaireCommandHandler {
 	private static HashMap<String, BaseCommand> commands;
 	
 	public static void runCommand(String command, String channel, String originUserName, ArrayList<String> args, BufferedWriter IRCWriter){
-		System.out.println("ClaireCommandHandler.runCommand()");
 		if(commands == null)initialize();
 		
 		if(commands.containsKey(command))commands.get(command).run(channel, originUserName, args, IRCWriter);
@@ -17,6 +16,6 @@ public class ClaireCommandHandler {
 	private static void initialize(){
 		commands = new HashMap<String, BaseCommand>();
 		commands.put("roll", new RollCommand());
-		
+		commands.put("afk", new AfkCommand());
 	}
 }
