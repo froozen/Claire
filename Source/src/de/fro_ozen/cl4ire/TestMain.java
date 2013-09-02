@@ -2,7 +2,7 @@ package de.fro_ozen.cl4ire;
 
 import de.fro_ozen.cl4ire.Connection.InputListenerType;
 
-public class Main {
+public class TestMain {
 
 	public static void main(String[] args) {
 		String[] channelList = {"#bottest"};
