@@ -37,13 +37,18 @@ public abstract class IRCInputListener {
 
 			else if(signalType.equals("JOIN")){
 				if(firstJoin){
-					ownNickName = originUserName;
-					firstJoin = false;
+					if(ownNickName == null)ownNickName = originUserName;
+					else if (!originUserName.equals(originUserName)){
+						firstJoin = false;
+					}
 				}
 				if(!originUserName.equals(ownNickName)){
 					UserManager.createUser(originUserName);
 					writeCommand("WHOIS " + originUserName);
 					handleJoinInput(channel, originUserName);
+				}
+				else{
+					writeMessage(channel, "My name is Cl4ire, i'm a chatbot made by fro_ozen.");
 				}
 
 			}

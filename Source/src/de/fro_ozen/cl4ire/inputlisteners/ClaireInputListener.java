@@ -7,7 +7,7 @@ import de.fro_ozen.cl4ire.UserManager;
 import de.fro_ozen.cl4ire.commands.ClaireCommandHandler;
 
 public class ClaireInputListener extends IRCInputListener{
-	private final String commandStarter = "[";
+	private final String commandStarter = "]";
 
 	public void handlePrivmsgInput(String channel, String originUserName, String restText) {
 		if(restText.startsWith(commandStarter)){
