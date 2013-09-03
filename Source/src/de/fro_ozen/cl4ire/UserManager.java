@@ -26,6 +26,11 @@ public class UserManager {
 		return null;
 	}
 	
+	public static void renameUser(String nickName, String newNickName){
+		if(users.containsKey(nickName))users.get(nickName).nickName = newNickName;
+		System.out.println("Renamed " + nickName + " to " + newNickName);
+	}
+	
 	public static void setUserChannels(String nickName, ArrayList<String> channels){
 		User target = users.get(nickName);
 		if(target!=null)target.channels = channels;

@@ -60,6 +60,10 @@ public abstract class IRCInputListener {
 			else if(signalType.equals("QUIT")){
 				UserManager.removeUser(originUserName);
 			}
+			else if(signalType.equals("NICK")){
+				String newNick = IRCInput.substring(IRCInput.indexOf(channel) + channel.length() + 2);
+				UserManager.renameUser(originUserName, newNick);
+			}
 		}
 		else{
 			if(signalType.equals("319")){
