@@ -80,6 +80,7 @@ public abstract class IRCInputListener {
 			if(signalType.equals("353")){
 				ArrayList<String> names = new ArrayList<String>();
 
+				
 				for(int i = 5; i<inputSplit.length; i++){
 					if(i == 5)names.add(inputSplit[i].substring(1));
 					else names.add(inputSplit[i]);
@@ -87,7 +88,8 @@ public abstract class IRCInputListener {
 
 				for(String name:names){
 					if(!name.equals(ownNickName)){
-						UserManager.createUser(name);
+						if(!name.startsWith("@"))UserManager.createUser(name);
+						else UserManager.createUser(name.substring(1));
 						System.out.println(name);
 						writeCommand("WHOIS " + name);
 					}
