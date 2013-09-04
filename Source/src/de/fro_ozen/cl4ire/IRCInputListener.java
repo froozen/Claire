@@ -81,13 +81,14 @@ public abstract class IRCInputListener {
 				ArrayList<String> names = new ArrayList<String>();
 
 				for(int i = 5; i<inputSplit.length; i++){
-					if(i == 5)names.add(inputSplit[4].substring(1));
+					if(i == 5)names.add(inputSplit[i].substring(1));
 					else names.add(inputSplit[i]);
 				}
 
 				for(String name:names){
 					if(!name.equals(ownNickName)){
 						UserManager.createUser(name);
+						System.out.println(name);
 						writeCommand("WHOIS " + name);
 					}
 				}
