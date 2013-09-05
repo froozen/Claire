@@ -47,7 +47,7 @@ public abstract class IRCInputListener {
 					writeCommand("WHOIS " + originUserName);
 					handleJoinInput(channel, originUserName);
 				}
-				else{
+				else if(!firstJoin){
 					writeMessage(channel, "My name is Cl4ire, i'm a chatbot made by fro_ozen.");
 				}
 
