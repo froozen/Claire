@@ -68,10 +68,14 @@ public abstract class IRCInputListener {
 		else{
 			if(signalType.equals("319")){
 				ArrayList<String> channels = new ArrayList<String>();
-
+				String channel = "";
+				
 				for(int i = 4; i<inputSplit.length; i++){
-					if(i == 4)channels.add(inputSplit[4].substring(1));
-					else channels.add(inputSplit[i]);
+					if(i == 4)channel = inputSplit[4].substring(1);
+					else channel = inputSplit[i];
+					if(channel.startsWith("@"))channel = channel.substring(1);
+					
+					channels.add(channel);
 				}
 
 				UserManager.setUserChannels(inputSplit[3], channels);
@@ -88,9 +92,8 @@ public abstract class IRCInputListener {
 
 				for(String name:names){
 					if(!name.equals(ownNickName)){
-						if(!name.startsWith("@"))UserManager.createUser(name);
-						else UserManager.createUser(name.substring(1));
-						System.out.println(name);
+						if(name.startsWith("@"))name = name.substring(1);
+						UserManager.createUser(name);
 						writeCommand("WHOIS " + name);
 					}
 				}
