@@ -19,6 +19,7 @@ public abstract class IRCInputListener {
 		ArrayList<String> avoidSignalType = new ArrayList<String>();
 		avoidSignalType.add("PONG");
 		avoidSignalType.add("NOTICE");
+		avoidSignalType.add("MODE");
 
 		String signalType = inputSplit[1];
 
@@ -61,7 +62,7 @@ public abstract class IRCInputListener {
 				UserManager.removeUser(originUserName);
 			}
 			else if(signalType.equals("NICK")){
-				String newNick = IRCInput.substring(IRCInput.indexOf(channel) + channel.length() + 2);
+				String newNick = inputSplit[2].substring(1);
 				UserManager.renameUser(originUserName, newNick);
 			}
 		}
