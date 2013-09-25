@@ -15,13 +15,13 @@ public class RollCommand extends BaseCommand{
 					}catch(NumberFormatException e){}
 					
 					if(rollLimit > 0){
-						postText(channel,  " You rolled: " + (ran.nextInt(rollLimit) + 1) , IRCWriter);
+						writeMessage(channel,  " You rolled: " + (ran.nextInt(rollLimit) + 1) , IRCWriter);
 					}
 					else{
-						postText(channel, "Usage of roll: ]roll <positive Integer>", IRCWriter);
+						writeMessage(channel, "Usage of roll: ]roll <positive Integer>", IRCWriter);
 					}
 				}
-				else postText(channel, "Usage of roll: ]roll <positive Integer>", IRCWriter);
+				else writeMessage(channel, "Usage of roll: ]roll <positive Integer>", IRCWriter);
 	}
 
 }

@@ -10,9 +10,9 @@ public class InviteCommand extends BaseCommand{
 			if(args.get(0).startsWith("#")){
 				writeCommand("JOIN " + args.get(0), IRCWriter);
 			}
-			else postText(channel, "Usage of the ]invite command: ]invite <channelname>", IRCWriter);
+			else writeMessage(channel, "Usage of the ]invite command: ]invite <channelname>", IRCWriter);
 		}
-		else postText(channel, "Usage of the ]invite command: ]invite <channelname>", IRCWriter);
+		else writeMessage(channel, "Usage of the ]invite command: ]invite <channelname>", IRCWriter);
 	}
 
 }

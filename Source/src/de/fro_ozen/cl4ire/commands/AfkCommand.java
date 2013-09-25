@@ -12,14 +12,14 @@ public class AfkCommand extends BaseCommand{
 			UserManager.setAfk(originUserName, true);
 			if(UserManager.getUserChannels(originUserName) != null){
 				for(String channelName:UserManager.getUserChannels(originUserName)){
-					if(channel.equals(channelName))postText(channelName, "You are now afk.", IRCWriter);
-					else postText(channelName, originUserName + " is now afk.", IRCWriter);
+					if(channel.equals(channelName))writeMessage(channelName, "You are now afk.", IRCWriter);
+					else writeMessage(channelName, originUserName + " is now afk.", IRCWriter);
 				}
 			}
 		}
 		else{
-			if(UserManager.isAfk(args.get(0)))postText(channel, args.get(0) + " is currently afk.", IRCWriter);
-			else postText(channel, args.get(0) + " is not afk.", IRCWriter);
+			if(UserManager.isAfk(args.get(0)))writeMessage(channel, args.get(0) + " is currently afk.", IRCWriter);
+			else writeMessage(channel, args.get(0) + " is not afk.", IRCWriter);
 		}
 	}
 

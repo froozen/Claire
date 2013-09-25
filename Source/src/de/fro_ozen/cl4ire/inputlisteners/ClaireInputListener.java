@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import de.fro_ozen.cl4ire.IRCInputListener;
 import de.fro_ozen.cl4ire.UserManager;
 import de.fro_ozen.cl4ire.commands.ClaireCommandHandler;
+import de.fro_ozen.cl4ire.commands.MessageManager;
 
 public class ClaireInputListener extends IRCInputListener{
 	private final String commandStarter = "]";
@@ -27,12 +28,15 @@ public class ClaireInputListener extends IRCInputListener{
 		else{
 			if(!channel.equals(originUserName)){
 				if(UserManager.isAfk(originUserName)){
+					//AFK user writes something
 					UserManager.setAfk(originUserName, false);
 					if(UserManager.getUserChannels(originUserName) != null){
 						for(String channelName:UserManager.getUserChannels(originUserName)){
 							writeMessage(channelName, originUserName + " is back!");
 						}
 					}
+					
+					if(MessageManager.getMessages(originUserName).size()>0)writeMessage(originUserName, "You got mail!");
 				}
 			}
 		}
