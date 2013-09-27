@@ -20,7 +20,7 @@ public class MessageCommand extends BaseCommand{
 			
 			if(UserManager.isAfk(message.receiver)){
 				MessageManager.addMessage(message);
-				writeMessage(channel, message.author + " is currently afk. Message will be delivered.", IRCWriter);
+				writeMessage(channel, message.receiver + " is currently afk. Message will be delivered.", IRCWriter);
 			}
 			else{
 				writeMessage(message.receiver, message.toString(), IRCWriter);
