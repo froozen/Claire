@@ -26,5 +26,6 @@ public class ClaireCommandHandler {
 		commandAbbreviations = new HashMap<String, String>();
 		commandAbbreviations.put("cm", "checkmessages");
 		commandAbbreviations.put("msg", "message");
+		commandAbbreviations.put("inbox", "checkmessages");
 	}
 }

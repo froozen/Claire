@@ -43,6 +43,9 @@ public class ClaireInputListener extends IRCInputListener{
 	}
 
 	public void handleJoinInput(String channel, String originUserName) {
-		writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ".");
+		int messageCount = MessageManager.getMessages(originUserName).size();
+		
+		if(messageCount > 0) writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ". You have " + messageCount + " new messages!");
+		else writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ".");
 	}
 }
