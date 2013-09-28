@@ -3,6 +3,7 @@ package de.fro_ozen.cl4ire.commands;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 
+import de.fro_ozen.cl4ire.User;
 import de.fro_ozen.cl4ire.UserManager;
 
 public class MessageCommand extends BaseCommand{
@@ -18,11 +19,15 @@ public class MessageCommand extends BaseCommand{
 			
 			Message message = new Message(messageString, args.get(0), originUserName);
 			
-			if(UserManager.isAfk(message.receiver)){
+			if(UserManager.getStatus(message.receiver) == User.StatusType.AFK){
 				MessageManager.addMessage(message);
 				writeMessage(channel, message.receiver + " is currently afk. Message will be delivered.", IRCWriter);
 			}
-			else{
+			else if(UserManager.getStatus(message.receiver) == User.StatusType.OFFLINE){
+				MessageManager.addMessage(message);
+				writeMessage(channel, message.receiver + " is currently offline. Message will be delivered.", IRCWriter);
+			}
+			else if(UserManager.getStatus(message.receiver) == User.StatusType.ONLINE){
 				writeMessage(message.receiver, message.toString(), IRCWriter);
 				writeMessage(channel, message.receiver + " is not afk at the moment. The message was delivered!", IRCWriter);
 			}

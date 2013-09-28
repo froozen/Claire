@@ -12,13 +12,13 @@ public class UserManager {
 		System.out.println("Created user: " + nickName);
 	}
 	
-	public static boolean isAfk(String nickName){
-		if(users.containsKey(nickName))return users.get(nickName).afk;
-		return false;
+	public static User.StatusType getStatus(String nickName){
+		if(users.containsKey(nickName))return users.get(nickName).status;
+		else return User.StatusType.OFFLINE;
 	}
 	
-	public static void setAfk(String nickName, boolean bool){
-		if(users.containsKey(nickName))users.get(nickName).afk = bool;
+	public static void setStatus(String nickName, User.StatusType status){
+		if(users.containsKey(nickName))users.get(nickName).status = status;
 	}
 	
 	public static ArrayList<String> getUserChannels(String nickName){

@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 public class User {
 	public String nickName;
-	public boolean afk;
 	public ArrayList<String> channels;
+	public StatusType status;
 	
 	public User(String nickName){
-		afk = false;
+		status = StatusType.ONLINE;
+	}
+	
+	public enum StatusType{
+		ONLINE, AFK, OFFLINE;
 	}
 }

@@ -3,6 +3,7 @@ package de.fro_ozen.cl4ire.inputlisteners;
 import java.util.ArrayList;
 
 import de.fro_ozen.cl4ire.IRCInputListener;
+import de.fro_ozen.cl4ire.User;
 import de.fro_ozen.cl4ire.UserManager;
 import de.fro_ozen.cl4ire.commands.ClaireCommandHandler;
 import de.fro_ozen.cl4ire.commands.MessageManager;
@@ -27,9 +28,9 @@ public class ClaireInputListener extends IRCInputListener{
 		}
 		else{
 			if(!channel.equals(originUserName)){
-				if(UserManager.isAfk(originUserName)){
+				if(UserManager.getStatus(originUserName) == User.StatusType.AFK){
 					//AFK user writes something
-					UserManager.setAfk(originUserName, false);
+					UserManager.setStatus(originUserName, User.StatusType.ONLINE);
 					if(UserManager.getUserChannels(originUserName) != null){
 						for(String channelName:UserManager.getUserChannels(originUserName)){
 							writeMessage(channelName, originUserName + " is back!");

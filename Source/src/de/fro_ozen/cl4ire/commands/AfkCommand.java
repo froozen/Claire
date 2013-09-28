@@ -3,13 +3,15 @@ package de.fro_ozen.cl4ire.commands;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 
+import de.fro_ozen.cl4ire.User;
 import de.fro_ozen.cl4ire.UserManager;
 
 public class AfkCommand extends BaseCommand{
 
 	public void run(String channel, String originUserName, ArrayList<String> args, BufferedWriter IRCWriter) {
 		if(args == null){
-			UserManager.setAfk(originUserName, true);
+			UserManager.setStatus(originUserName, User.StatusType.AFK);
+			
 			if(UserManager.getUserChannels(originUserName) != null){
 				for(String channelName:UserManager.getUserChannels(originUserName)){
 					if(channel.equals(channelName))writeMessage(channelName, "You are now afk.", IRCWriter);
@@ -18,8 +20,9 @@ public class AfkCommand extends BaseCommand{
 			}
 		}
 		else{
-			if(UserManager.isAfk(args.get(0)))writeMessage(channel, args.get(0) + " is currently afk.", IRCWriter);
-			else writeMessage(channel, args.get(0) + " is not afk.", IRCWriter);
+			if(UserManager.getStatus(args.get(0)) == User.StatusType.AFK)writeMessage(channel, args.get(0) + " is currently afk.", IRCWriter);
+			else if(UserManager.getStatus(args.get(0)) == User.StatusType.ONLINE) writeMessage(channel, args.get(0) + " is not afk.", IRCWriter);
+			else if(UserManager.getStatus(args.get(0)) == User.StatusType.OFFLINE) writeMessage(channel, args.get(0) + " is offline.", IRCWriter);
 		}
 	}
 
