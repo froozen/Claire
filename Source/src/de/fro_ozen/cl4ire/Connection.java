@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.URLDecoder;
 
+import de.fro_ozen.cl4ire.commands.MessageManager;
 import de.fro_ozen.cl4ire.inputlisteners.ClaireInputListener;
 
 public class Connection extends Thread{
@@ -46,6 +48,7 @@ public class Connection extends Thread{
 
 	public void run(){
 		try {
+			MessageManager.setFilePath(URLDecoder.decode(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8"));
 			connectionSocket = new Socket(serverName, 6667);
 
 			connectionReader = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -58,7 +61,7 @@ public class Connection extends Thread{
 
 			//Initial loop in order to finish connecting
 			while((connectionInput = connectionReader.readLine()) != null){
-				System.out.println(">> " + connectionInput);
+//				System.out.println(">> " + connectionInput);
 
 				//Return the pong to stay connected
 				if(connectionInput.startsWith("PING")){

@@ -11,23 +11,32 @@ import java.util.ArrayList;
 @SuppressWarnings("resource")
 public class MessageManager {
 	private static ArrayList<Message> messageList = new ArrayList<Message>();
+	private static String filePath;
+	
+	public static void setFilePath(String runningDirectory){
+		if(filePath == null){
+			try{
+				if(runningDirectory.endsWith(".jar"))runningDirectory = runningDirectory.substring(0, runningDirectory.lastIndexOf(File.separatorChar) + 1);
+				else runningDirectory += ".." + File.separator;
+				
+				filePath = runningDirectory + "files" + File.separator + "messages.txt";
+				
+				File messageFile = new File(filePath);
+				if(!messageFile.isFile()){
+					System.out.println("Error: File not found: " + messageFile.getAbsolutePath());
+				}
+				else{
+					System.out.println("Loading files from: " + messageFile.getAbsolutePath());
+					BufferedReader messageFileReader = new BufferedReader(new FileReader(messageFile.getPath()));
 
-	static{
-		try{
-			File messageFile = new File("messages.txt");
-			if(!messageFile.isFile()){
-				System.out.println("Error: File not fund: messages.txt");
-			}
-			else{
-				BufferedReader messageFileReader = new BufferedReader(new FileReader(messageFile.getPath()));
-
-				String readLine = "";
-				while((readLine = messageFileReader.readLine()) != null){
-					addMessage(readLine);
+					String readLine = "";
+					while((readLine = messageFileReader.readLine()) != null){
+						addMessage(readLine);
+					}
 				}
 			}
+			catch (IOException e) {e.printStackTrace();}
 		}
-		catch (IOException e) {e.printStackTrace();}
 	}
 
 	public static void addMessage(String content, String receiver, String author){
@@ -60,7 +69,7 @@ public class MessageManager {
 
 	private static void saveMessageList(){
 		try{
-			File messageFile = new File(".." + File.separator + "messages.txt");
+			File messageFile = new File(filePath);
 			if(!messageFile.isFile()){
 				System.out.println("Error: File not fund: messages.txt");
 			}

@@ -9,7 +9,7 @@ import de.fro_ozen.cl4ire.UserManager;
 public class MessageCommand extends BaseCommand{
 
 	public void run(String channel, String originUserName, ArrayList<String> args, BufferedWriter IRCWriter){
-		if(args.size()>1){
+		if(args != null && args.size()>1){
 			String messageString = "";
 			
 			for(int i = 1; i<args.size(); i++){
