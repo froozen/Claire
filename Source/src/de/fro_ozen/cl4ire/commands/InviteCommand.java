@@ -15,4 +15,8 @@ public class InviteCommand extends BaseCommand{
 		else writeMessage(channel, "Usage of the ]invite command: ]invite <channelname>", IRCWriter);
 	}
 
+	public String getCommandGuide() {
+		return "]invite <channelname> to get me to join <channelname>";
+	}
+
 }

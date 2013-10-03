@@ -33,5 +33,9 @@ public class MessageCommand extends BaseCommand{
 			}
 		}
 	}
+
+	public String getCommandGuide() {
+		return "]message <target> <content> to send a message with content <content> to <target>";
+	}
 	
 }

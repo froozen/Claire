@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public abstract class BaseCommand {
 	public abstract void run(String channel, String originUserName, ArrayList<String> args, BufferedWriter IRCWriter);
+	public abstract String getCommandGuide();
 	
 	public void writeMessage(String target, String text, BufferedWriter IRCWriter){
 		try {

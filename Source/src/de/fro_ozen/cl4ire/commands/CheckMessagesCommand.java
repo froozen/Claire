@@ -11,4 +11,8 @@ public class CheckMessagesCommand extends BaseCommand{
 		}
 		else writeMessage(originUserName, "There are no messages for you.", IRCWriter);
 	}
+
+	public String getCommandGuide() {
+		return "]checkmessages to see all your new messages";
+	}
 }

@@ -17,4 +17,8 @@ public class StatusCommand extends BaseCommand{
 		}
 		else writeMessage(channel, "Usage of the ]status command: ]status <username>", IRCWriter);
 	}
+
+	public String getCommandGuide() {
+		return "]status <target> to display the status of <target>";
+	}
 }

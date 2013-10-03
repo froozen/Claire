@@ -26,4 +26,9 @@ public class AfkCommand extends BaseCommand{
 		}
 	}
 
+	@Override
+	public String getCommandGuide() {
+		return "]afk to mark yourself as afk, write something to indicate that you are back";
+	}
+
 }
