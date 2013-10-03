@@ -11,7 +11,7 @@ public class Message {
 
 	public Message(String fileContent){
 		String[] messageSplit = fileContent.split(" ");
-		if(messageSplit.length < 3)System.out.println("Error creating message for: " + fileContent);
+		if(messageSplit.length < 3 && !fileContent.equals(""))System.out.println("Error creating message for: " + fileContent);
 		else{
 			this.author = messageSplit[0];
 			this.receiver = messageSplit[1];
@@ -22,8 +22,6 @@ public class Message {
 				if(i != messageSplit.length - 1)messageContent += " ";
 			}
 			this.content = messageContent;
-			
-			System.out.println("Created: " + this.toString());
 		}
 	}
 

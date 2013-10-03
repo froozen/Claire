@@ -40,11 +40,13 @@ public class MessageManager {
 	}
 
 	public static void addMessage(String content, String receiver, String author){
+		System.out.println("Created new message!");
 		messageList.add(new Message(content, receiver, author));
 		saveMessageList();
 	}
 
 	public static void addMessage(Message message){
+		System.out.println("Created new message!");
 		messageList.add(message);
 		saveMessageList();
 	}
@@ -78,6 +80,7 @@ public class MessageManager {
 
 				for(Message msg:messageList){
 					messageFileWriter.write(msg.toSaveFormat());
+					messageFileWriter.newLine();
 				}
 				messageFileWriter.close();
 			}
