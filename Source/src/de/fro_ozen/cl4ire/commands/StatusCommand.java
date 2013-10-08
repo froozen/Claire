@@ -11,7 +11,10 @@ public class StatusCommand extends BaseCommand{
 	public void run(String channel, String originUserName, ArrayList<String> args, BufferedWriter IRCWriter) {
 		if(args != null && args.size()>0){
 			StatusType status = UserManager.getStatus(args.get(0));
-			if(status == StatusType.AFK)writeMessage(channel, args.get(0) + " is currently afk.", IRCWriter);
+			if(status == StatusType.AFK){
+				if(!UserManager.getUserAfkMessage(args.get(0)).equals(""))writeMessage(channel, args.get(0) + " is currently afk. The user left a message: " + UserManager.getUserAfkMessage(args.get(0)), IRCWriter);
+				else writeMessage(channel, args.get(0) + " is currently afk.", IRCWriter);
+			}
 			else if(status == StatusType.ONLINE)writeMessage(channel, args.get(0) + " is available.", IRCWriter);
 			else if(status == StatusType.OFFLINE)writeMessage(channel, args.get(0) + " is not here.", IRCWriter);
 		}

@@ -30,7 +30,8 @@ public class ClaireInputListener extends IRCInputListener{
 			if(!channel.equals(originUserName)){
 				if(UserManager.getStatus(originUserName) == User.StatusType.AFK){
 					//AFK user writes something
-					UserManager.setStatus(originUserName, User.StatusType.ONLINE);
+					UserManager.setUserStatus(originUserName, User.StatusType.ONLINE);
+					UserManager.setUserAfkMessage(originUserName, "");
 					if(UserManager.getUserChannels(originUserName) != null){
 						for(String channelName:UserManager.getUserChannels(originUserName)){
 							writeMessage(channelName, originUserName + " is back!");

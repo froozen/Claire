@@ -20,8 +20,17 @@ public class UserManager {
 		else return User.StatusType.OFFLINE;
 	}
 	
-	public static void setStatus(String nickName, User.StatusType status){
+	public static void setUserStatus(String nickName, User.StatusType status){
 		if(users.containsKey(nickName))users.get(nickName).status = status;
+	}
+	
+	public static void setUserAfkMessage(String nickName, String afkMessage){
+		if(users.containsKey(nickName))users.get(nickName).afkMessage = afkMessage;
+	}
+	
+	public static String getUserAfkMessage(String nickName){
+		if(users.containsKey(nickName))return users.get(nickName).afkMessage;
+		return null;
 	}
 	
 	public static ArrayList<String> getUserChannels(String nickName){
