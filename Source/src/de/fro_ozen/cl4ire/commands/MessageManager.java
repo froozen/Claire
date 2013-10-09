@@ -57,10 +57,10 @@ public class MessageManager {
 		return messages;
 	}
 
-	public static void removeMessages(String nickName){
+	public static void removeMessage(String nickName, int index){
 		ArrayList<Message> messages = new ArrayList<Message>();
 		for(Message msg:messageList)if(msg.receiver.equals(nickName))messages.add(msg);
-		messageList.removeAll(messages);
+		if(index <= messages.size())messageList.remove(messages.get(index - 1));
 		saveMessageList();
 	}
 
@@ -69,7 +69,7 @@ public class MessageManager {
 		messageList.add(message);
 	}
 
-	private static void saveMessageList(){
+	public static void saveMessageList(){
 		try{
 			File messageFile = new File(filePath);
 			if(!messageFile.isFile()){

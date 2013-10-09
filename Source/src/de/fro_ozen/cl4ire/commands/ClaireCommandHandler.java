@@ -22,6 +22,7 @@ public class ClaireCommandHandler {
 		commands.put("checkmessages", new CheckMessagesCommand());
 		commands.put("status", new StatusCommand());
 		commands.put("help", new HelpCommand());
+		commands.put("rm", new RemoveMessageCommand());
 
 		commandAbbreviations = new HashMap<String, String>();
 		commandAbbreviations.put("cm", "checkmessages");
