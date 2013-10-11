@@ -6,6 +6,7 @@ import de.fro_ozen.cl4ire.IRCInputListener;
 import de.fro_ozen.cl4ire.User;
 import de.fro_ozen.cl4ire.UserManager;
 import de.fro_ozen.cl4ire.commands.ClaireCommandHandler;
+import de.fro_ozen.cl4ire.commands.Message;
 import de.fro_ozen.cl4ire.commands.MessageManager;
 
 public class ClaireInputListener extends IRCInputListener{
@@ -45,7 +46,9 @@ public class ClaireInputListener extends IRCInputListener{
 	}
 
 	public void handleJoinInput(String channel, String originUserName) {
-		int messageCount = MessageManager.getMessages(originUserName).size();
+		int messageCount = 0;
+		
+		for(Message msg:MessageManager.getMessages(originUserName))if(msg.unread)messageCount++;
 		
 		if(messageCount > 1) writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ". You have " + messageCount + " new messages!");
 		else if(messageCount == 1) writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ". You have a new message!");
