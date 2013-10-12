@@ -5,10 +5,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.URLDecoder;
 
-import de.fro_ozen.cl4ire.commands.MessageManager;
 import de.fro_ozen.cl4ire.inputlisteners.ClaireInputListener;
 
 public class Connection extends Thread{
@@ -26,6 +26,10 @@ public class Connection extends Thread{
 		this.channels = channels;
 		this.nickName = nickName;
 		this.type = type;
+	}
+	
+	public Connection(){
+		
 	}
 
 	private void joinChannels() throws IOException{
@@ -48,7 +52,6 @@ public class Connection extends Thread{
 
 	public void run(){
 		try {
-			MessageManager.setFilePath(URLDecoder.decode(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8"));
 			connectionSocket = new Socket(serverName, 6667);
 
 			connectionReader = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -103,6 +106,15 @@ public class Connection extends Thread{
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public String getFilePath(){
+		 try {
+			 return URLDecoder.decode(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

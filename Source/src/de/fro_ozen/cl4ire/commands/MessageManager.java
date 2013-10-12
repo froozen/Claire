@@ -8,35 +8,27 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@SuppressWarnings("resource")
 public class MessageManager {
 	private static ArrayList<Message> messageList = new ArrayList<Message>();
 	private static String filePath;
 	
 	public static void setFilePath(String runningDirectory){
-		if(filePath == null){
-			try{
-				if(runningDirectory.endsWith(".jar"))runningDirectory = runningDirectory.substring(0, runningDirectory.lastIndexOf(File.separatorChar) + 1);
-				else runningDirectory += ".." + File.separator;
+		filePath = runningDirectory + "files" + File.separator + "messages.txt";
+		File messageFile = new File(filePath);
+		if(messageFile.isFile()){
+			System.out.println("Loading Messages from: " + filePath);
+			
+			try {
+				BufferedReader messageFileReader = new BufferedReader(new FileReader(messageFile));
 				
-				filePath = runningDirectory + "files" + File.separator + "messages.txt";
-				
-				File messageFile = new File(filePath);
-				if(!messageFile.isFile()){
-					System.out.println("Error: File not found: " + messageFile.getAbsolutePath());
+				String messageFileLine;
+				while((messageFileLine = messageFileReader.readLine()) != null){
+					messageList.add(new Message(messageFileLine));
 				}
-				else{
-					System.out.println("Loading files from: " + messageFile.getAbsolutePath());
-					BufferedReader messageFileReader = new BufferedReader(new FileReader(messageFile.getPath()));
-
-					String readLine = "";
-					while((readLine = messageFileReader.readLine()) != null){
-						addMessage(readLine);
-					}
-				}
-			}
-			catch (IOException e) {e.printStackTrace();}
+				messageFileReader.close();
+			} catch (IOException e) {e.printStackTrace();}
 		}
+		else System.out.println("Can't find file: " + filePath);
 	}
 
 	public static void addMessage(String content, String receiver, String author){

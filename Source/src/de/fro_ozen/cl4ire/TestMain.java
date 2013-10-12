@@ -7,5 +7,6 @@ public class TestMain {
 	public static void main(String[] args) {
 		String[] channelList = {"#bottest"};
 		ConnectionManager.createConnection("irc.freenode.net", channelList, "Cl4ire_", InputListenerType.CLAIRE);
+		
 	}
 }

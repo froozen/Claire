@@ -48,6 +48,7 @@ public class ClaireInputListener extends IRCInputListener{
 	public void handleJoinInput(String channel, String originUserName) {
 		int messageCount = 0;
 		
+		//Count unread messages
 		for(Message msg:MessageManager.getMessages(originUserName))if(msg.unread)messageCount++;
 		
 		if(messageCount > 1) writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ". You have " + messageCount + " new messages!");
