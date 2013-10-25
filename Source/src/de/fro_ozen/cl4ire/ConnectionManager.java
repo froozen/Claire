@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import de.fro_ozen.cl4ire.Connection.InputListenerType;
@@ -24,11 +25,14 @@ public class ConnectionManager {
 	}
 
 	public static void initConnections(){
-		String runningDirectory = new Connection().getFilePath();
+		String runningDirectory = "";
+		try {
+			runningDirectory = new File(ConnectionManager.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath();
+		} catch (URISyntaxException e1) {e1.printStackTrace();}
 
 		try{
 			if(runningDirectory.endsWith(".jar"))runningDirectory = runningDirectory.substring(0, runningDirectory.lastIndexOf(File.separatorChar) + 1);
-			else runningDirectory += ".." + File.separator;
+			else runningDirectory += File.separator + ".." + File.separator;
 
 			filePath = runningDirectory + "files" + File.separator + "connections.txt";
 			MessageManager.setFilePath(runningDirectory);
