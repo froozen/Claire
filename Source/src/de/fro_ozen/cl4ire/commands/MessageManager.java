@@ -52,7 +52,7 @@ public class MessageManager {
 	public static void removeMessage(String nickName, int index){
 		ArrayList<Message> messages = new ArrayList<Message>();
 		for(Message msg:messageList)if(msg.receiver.equals(nickName))messages.add(msg);
-		if(index - 1 <= messages.size())messageList.remove(messages.get(index - 1));
+		if(index - 1 < messages.size())messageList.remove(messages.get(index - 1));
 		saveMessageList();
 	}
 
