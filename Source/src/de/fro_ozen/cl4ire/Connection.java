@@ -13,12 +13,14 @@ import de.fro_ozen.cl4ire.inputlisteners.ClaireInputListener;
 
 public class Connection extends Thread{
 	public  String nickName, serverName;
-	private String connectionInput;
+	public InputListenerType type;
 	public String[] channels;
-	private Socket connectionSocket;
+	public Socket connectionSocket;
+
+	private String connectionInput;
 	private BufferedWriter connectionWriter;
 	private BufferedReader connectionReader;
-	private InputListenerType type;
+	private ConnectionTester connectionTester;
 	private IRCInputListener connectionInputListener;
 
 	public Connection(String serverName, String[] channels, String nickName, InputListenerType type){
@@ -27,9 +29,9 @@ public class Connection extends Thread{
 		this.nickName = nickName;
 		this.type = type;
 	}
-	
+
 	public Connection(){
-		
+
 	}
 
 	private void joinChannels() throws IOException{
@@ -52,8 +54,21 @@ public class Connection extends Thread{
 
 	public void run(){
 		try {
-			connectionSocket = new Socket(serverName, 6667);
+			//Try to connect
+			boolean connectionEstablished = false;
+			while(!connectionEstablished){
+				try{
+					connectionSocket = new Socket(serverName, 6667);
+					connectionEstablished = true;
 
+
+				}
+				catch (IOException e) {
+					System.out.println("Failed to connect to: " + serverName);
+					try {Thread.sleep(30000);
+					}catch (InterruptedException e1) {e1.printStackTrace();}
+				}
+			}
 			connectionReader = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
 			connectionWriter = new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream()));
 
@@ -64,7 +79,7 @@ public class Connection extends Thread{
 
 			//Initial loop in order to finish connecting
 			while((connectionInput = connectionReader.readLine()) != null){
-//				System.out.println(">> " + connectionInput);
+				//				System.out.println(">> " + connectionInput);
 
 				//Return the pong to stay connected
 				if(connectionInput.startsWith("PING")){
@@ -75,12 +90,11 @@ public class Connection extends Thread{
 					//Error: nick already in use
 					if(connectionInput.contains(" 433 ")){
 						System.out.println("Error: nick is already in use");
+						nickName += "_";
+						System.out.println("Switching to: " + nickName);
 
-						connectionReader.close();
-						connectionWriter.close();
-						connectionSocket.close();
-
-						break;
+						connectionWriter.write("NICK " + nickName +"\r\n");
+						connectionWriter.flush();
 					}
 
 					//Connection established
@@ -94,24 +108,26 @@ public class Connection extends Thread{
 						connectionWriter.flush();
 						createInputListener();
 						if(connectionInputListener != null)connectionInputListener.setIRCWriter(connectionWriter);
+
+						connectionTester = new ConnectionTester(this);
+						connectionTester.start();
 					}
 				}
-				
+
 				//Handle the input via connectionInputListener
 				else{
 					connectionInputListener.handleInput(connectionInput);
 				}
 
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getFilePath(){
-		 try {
-			 return URLDecoder.decode(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8");
+		try {
+			return URLDecoder.decode(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			return null;

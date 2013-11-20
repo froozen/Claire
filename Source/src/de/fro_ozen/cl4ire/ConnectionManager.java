@@ -23,6 +23,12 @@ public class ConnectionManager {
 		connections.add(connection);
 		connection.start();
 	}
+	
+	@SuppressWarnings("deprecation")
+	public static void removeConnection(Connection connection){
+		connection.stop();
+		connections.remove(connection);
+	}
 
 	public static void initConnections(){
 		String runningDirectory = "";
@@ -55,6 +61,7 @@ public class ConnectionManager {
 				}
 				connectionsFileReader.close();
 			}
+			else System.out.println("Can't find connections.txt at: " + connectionsFile.getAbsolutePath());
 		}
 		catch (IOException e) {e.printStackTrace();}
 	}
