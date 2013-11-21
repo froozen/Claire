@@ -55,6 +55,12 @@ public class MessageManager {
 		if(index - 1 < messages.size())messageList.remove(messages.get(index - 1));
 		saveMessageList();
 	}
+	
+	public static void removeAllMessages(String nickName){
+		ArrayList<Message> messages = getMessages(nickName);
+		messageList.removeAll(messages);
+		saveMessageList();
+	}
 
 	public static void addMessage(String fileContent){
 		Message message = new Message(fileContent);
