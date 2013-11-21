@@ -46,12 +46,13 @@ public abstract class IRCInputListener {
 						firstJoin = false;
 					}
 				}
-				if(!originUserName.equals(ownNickName)){
+				
+				if(!ownNickName.equals(originUserName) && !ownNickName.equals(originUserName.substring(1))){
 					UserManager.createUser(originUserName);
 					writeCommand("WHOIS " + originUserName);
 					handleJoinInput(channel, originUserName);
 				}
-				else if(!firstJoin){
+				else{
 					writeMessage(channel, "My name is Cl4ire, i'm a chatbot made by fro_ozen.");
 				}
 
