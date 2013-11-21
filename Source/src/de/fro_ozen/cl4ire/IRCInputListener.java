@@ -38,8 +38,11 @@ public abstract class IRCInputListener {
 
 			else if(signalType.equals("JOIN")){
 				if(firstJoin){
-					if(ownNickName == null)ownNickName = originUserName;
-					else if (!originUserName.equals(originUserName)){
+					if(ownNickName == null){
+						if(!originUserName.startsWith("@"))ownNickName = originUserName.substring(1);
+						else ownNickName = originUserName;
+					}
+					else if (!ownNickName.equals(originUserName) && !ownNickName.equals(originUserName.substring(1))){
 						firstJoin = false;
 					}
 				}
