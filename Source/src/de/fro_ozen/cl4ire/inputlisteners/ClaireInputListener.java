@@ -25,6 +25,7 @@ public class ClaireInputListener extends IRCInputListener{
 			}
 			else args = null;
 			
+			System.out.println("ClaireInputListener.handlePrivmsgInput() :: Command: " + splitText[0] + " by " + originUserName + " on " + channel);
 			ClaireCommandHandler.runCommand(splitText[0], channel, originUserName, args, IRCWriter);
 		}
 		else{

@@ -26,6 +26,12 @@ public class ConnectionManager {
 	
 	@SuppressWarnings("deprecation")
 	public static void removeConnection(Connection connection){
+		try {
+			connection.connectionSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		connection.stop();
 		connections.remove(connection);
 	}

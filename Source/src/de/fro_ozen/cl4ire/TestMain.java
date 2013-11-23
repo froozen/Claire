@@ -19,7 +19,7 @@ public class TestMain {
 		
 		String[] channelList = {"#bottest"};
 		MessageManager.setFilePath(runningDirectory);
-		ConnectionManager.createConnection("irc.freenode.net", channelList, "Cl4ire_", InputListenerType.CLAIRE);
+		ConnectionManager.createConnection("irc.freenode.net", channelList, "testbotttt", InputListenerType.CLAIRE);
 		
 	}
 }
