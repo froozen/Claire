@@ -89,9 +89,16 @@ public class Connection extends Thread{
 				else if(connectionInputListener == null){
 					//Error: nick already in use
 					if(connectionInput.contains(" 433 ")){
-						System.out.println("Error: nick is already in use");
-						nickName += "_";
-						System.out.println("Switching to: " + nickName);
+						if(!nickName.endsWith("_")){
+							System.out.println("Error: nick is already in use");
+							nickName += "_";
+							System.out.println("Switching to: " + nickName);
+						}
+						else{
+							System.out.println("Error: nick is already in use");
+							nickName = nickName.substring(0, nickName.length() - 1);
+							System.out.println("Switching to: " + nickName);
+						}
 
 						connectionWriter.write("NICK " + nickName +"\r\n");
 						connectionWriter.flush();
