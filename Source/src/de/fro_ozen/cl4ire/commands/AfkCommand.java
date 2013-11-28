@@ -32,8 +32,7 @@ public class AfkCommand extends BaseCommand{
 
 			if(UserManager.getUserChannels(originUserName) != null){
 				for(String channelName:UserManager.getUserChannels(originUserName)){
-					if(channel.equals(channelName))writeMessage(channelName, "You are now afk.", IRCWriter);
-					else writeMessage(channelName, originUserName + " is now afk.", IRCWriter);
+					writeMessage(channelName, originUserName + " is now afk.", IRCWriter);
 				}
 			}
 		}
