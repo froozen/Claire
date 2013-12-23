@@ -21,12 +21,10 @@ public class ConnectionTester extends Thread{
 		}
 		
 		Date now = new Date();
-		System.out.println("ConnectionTester.ConnectionTester() :: " + now.getHours() + ":" + now.getMinutes());
 	}
 	
 	public void run(){
 		while(true){
-			System.out.println("Testing Connection");
 			try {
 				Socket s = new Socket(targetConnection.serverName, 6667);
 				s.close();

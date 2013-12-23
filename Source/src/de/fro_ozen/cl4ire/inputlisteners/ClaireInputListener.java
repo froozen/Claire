@@ -13,6 +13,7 @@ public class ClaireInputListener extends IRCInputListener{
 	private final String commandStarter = "]";
 
 	public void handlePrivmsgInput(String channel, String originUserName, String restText) {
+		System.out.println("[" + originUserName + "]: " + restText);
 		if(restText.startsWith(commandStarter)){
 			restText = restText.substring(commandStarter.length());
 			String[] splitText = restText.split(" ");

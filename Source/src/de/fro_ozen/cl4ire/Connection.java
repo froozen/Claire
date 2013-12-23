@@ -79,7 +79,6 @@ public class Connection extends Thread{
 
 			//Initial loop in order to finish connecting
 			while((connectionInput = connectionReader.readLine()) != null){
-				System.out.println(">> " + connectionInput);
 
 				//Return the pong to stay connected
 				if(connectionInput.startsWith("PING")){
@@ -106,7 +105,7 @@ public class Connection extends Thread{
 
 					//Connection established
 					else if(connectionInput.contains(" 004 ")){
-						System.out.println("Connection established");
+						System.out.println("Connection established to: " + serverName);
 					}
 
 					//Ready to join channels
