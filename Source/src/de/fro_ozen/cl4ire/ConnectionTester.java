@@ -4,13 +4,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.Date;
 
 public class ConnectionTester extends Thread{
 	private Connection targetConnection;
 	private BufferedWriter targetWriter;
 	
-	@SuppressWarnings("deprecation")
 	public ConnectionTester(Connection target){
 		targetConnection = target;
 		
@@ -20,7 +18,6 @@ public class ConnectionTester extends Thread{
 			e.printStackTrace();
 		}
 		
-		Date now = new Date();
 	}
 	
 	public void run(){
