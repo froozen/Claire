@@ -3,6 +3,7 @@ package de.fro_ozen.cl4ire.commands;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 
+import de.fro_ozen.cl4ire.MessageTemplates;
 import de.fro_ozen.cl4ire.User;
 import de.fro_ozen.cl4ire.UserManager;
 
@@ -14,7 +15,7 @@ public class AfkCommand extends BaseCommand{
 
 			if(UserManager.getUserChannels(originUserName) != null){
 				for(String channelName:UserManager.getUserChannels(originUserName)){
-					writeMessage(channelName, originUserName + " is now afk.", IRCWriter);
+					writeMessage(channelName, MessageTemplates.formatMessage(MessageTemplates.afkMessage, originUserName, channelName, 0, null), IRCWriter);
 				}
 			}
 		}
@@ -31,7 +32,7 @@ public class AfkCommand extends BaseCommand{
 
 			if(UserManager.getUserChannels(originUserName) != null){
 				for(String channelName:UserManager.getUserChannels(originUserName)){
-					writeMessage(channelName, originUserName + " is now afk.", IRCWriter);
+					writeMessage(channelName, MessageTemplates.formatMessage(MessageTemplates.afkMessage, originUserName, channelName, 0, afkMessage), IRCWriter);
 				}
 			}
 		}

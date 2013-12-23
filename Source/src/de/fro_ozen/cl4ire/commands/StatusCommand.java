@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.util.ArrayList;
 
 import de.fro_ozen.cl4ire.User.StatusType;
+import de.fro_ozen.cl4ire.MessageTemplates;
 import de.fro_ozen.cl4ire.UserManager;
 
 public class StatusCommand extends BaseCommand{
@@ -12,11 +13,11 @@ public class StatusCommand extends BaseCommand{
 		if(args != null && args.size()>0){
 			StatusType status = UserManager.getStatus(args.get(0));
 			if(status == StatusType.AFK){
-				if(!UserManager.getUserAfkMessage(args.get(0)).equals(""))writeMessage(channel, args.get(0) + " is currently afk. The user left a message: " + UserManager.getUserAfkMessage(args.get(0)), IRCWriter);
-				else writeMessage(channel, args.get(0) + " is currently afk.", IRCWriter);
+				if(!UserManager.getUserAfkMessage(args.get(0)).equals(""))writeMessage(channel, MessageTemplates.formatMessage(MessageTemplates.statusAfkMessageMessage, args.get(0), channel, 0, UserManager.getUserAfkMessage(args.get(0))), IRCWriter);
+				else writeMessage(channel, MessageTemplates.formatMessage(MessageTemplates.statusAfkMessage, args.get(0), channel, 0, null), IRCWriter);
 			}
-			else if(status == StatusType.ONLINE)writeMessage(channel, args.get(0) + " is available.", IRCWriter);
-			else if(status == StatusType.OFFLINE)writeMessage(channel, args.get(0) + " is not here.", IRCWriter);
+			else if(status == StatusType.ONLINE)writeMessage(channel, MessageTemplates.formatMessage(MessageTemplates.statusOnlineMessage, args.get(0), channel, 0, null), IRCWriter);
+			else if(status == StatusType.OFFLINE)writeMessage(channel, MessageTemplates.formatMessage(MessageTemplates.statusOfflineMessage, args.get(0), channel, 0, null), IRCWriter);
 		}
 		else writeMessage(channel, "Usage of the ]status command: ]status <username>", IRCWriter);
 	}

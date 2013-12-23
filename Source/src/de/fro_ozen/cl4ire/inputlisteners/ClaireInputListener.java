@@ -3,6 +3,7 @@ package de.fro_ozen.cl4ire.inputlisteners;
 import java.util.ArrayList;
 
 import de.fro_ozen.cl4ire.IRCInputListener;
+import de.fro_ozen.cl4ire.MessageTemplates;
 import de.fro_ozen.cl4ire.User;
 import de.fro_ozen.cl4ire.UserManager;
 import de.fro_ozen.cl4ire.commands.ClaireCommandHandler;
@@ -18,15 +19,14 @@ public class ClaireInputListener extends IRCInputListener{
 			restText = restText.substring(commandStarter.length());
 			String[] splitText = restText.split(" ");
 			ArrayList<String> args = new ArrayList<String>();
-			
+
 			if(splitText.length>1){
 				for(int i = 1; i<splitText.length; i++){
 					args.add(splitText[i]);
 				}
 			}
 			else args = null;
-			
-			System.out.println("ClaireInputListener.handlePrivmsgInput() :: Command: " + splitText[0] + " by " + originUserName + " on " + channel);
+
 			ClaireCommandHandler.runCommand(splitText[0], channel, originUserName, args, IRCWriter);
 		}
 		else{
@@ -37,11 +37,13 @@ public class ClaireInputListener extends IRCInputListener{
 					UserManager.setUserAfkMessage(originUserName, "");
 					if(UserManager.getUserChannels(originUserName) != null){
 						for(String channelName:UserManager.getUserChannels(originUserName)){
-							writeMessage(channelName, originUserName + " is back!");
+							writeMessage(channelName, MessageTemplates.formatMessage(MessageTemplates.backMessage, originUserName, channel, 0, null));
 						}
 					}
 					
-					if(MessageManager.getMessages(originUserName).size()>0)writeMessage(originUserName, "You got mail!");
+					int messageCount = 0;
+					for(Message msg:MessageManager.getMessages(originUserName))if(msg.unread)messageCount++;
+					if(messageCount > 0)writeMessage(originUserName, MessageTemplates.formatMessage(MessageTemplates.newMessagesMessage, originUserName, channel, messageCount, null));
 				}
 			}
 		}
@@ -49,12 +51,15 @@ public class ClaireInputListener extends IRCInputListener{
 
 	public void handleJoinInput(String channel, String originUserName) {
 		int messageCount = 0;
-		
+		String welcomeMessage = "";
+
 		//Count unread messages
 		for(Message msg:MessageManager.getMessages(originUserName))if(msg.unread)messageCount++;
+
+		if(messageCount > 0) welcomeMessage = MessageTemplates.formatMessage(MessageTemplates.welcomeMessageNewMessages, originUserName, channel, messageCount, null);
+		else welcomeMessage = MessageTemplates.formatMessage(MessageTemplates.welcomeMessage, originUserName, channel, messageCount, null);
 		
-		if(messageCount > 1) writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ". You have " + messageCount + " new messages!");
-		else if(messageCount == 1) writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ". You have a new message!");
-		else writeMessage(channel, "Welcome on " + channel + ", " + originUserName + ".");
+		writeMessage(channel, welcomeMessage);
+
 	}
 }
