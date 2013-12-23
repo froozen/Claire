@@ -23,7 +23,7 @@ public class ConnectionManager {
 		connections.add(connection);
 		connection.start();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public static void removeConnection(Connection connection){
 		try {
@@ -31,7 +31,7 @@ public class ConnectionManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		connection.stop();
 		connections.remove(connection);
 	}
@@ -48,6 +48,7 @@ public class ConnectionManager {
 
 			filePath = runningDirectory + "files" + File.separator + "connections.txt";
 			MessageManager.setFilePath(runningDirectory);
+			MessageTemplates.loadTemplates(runningDirectory);
 
 			File connectionsFile = new File(filePath);
 			if(connectionsFile.isFile()){
@@ -55,14 +56,16 @@ public class ConnectionManager {
 
 				String connectionLine;
 				while((connectionLine = connectionsFileReader.readLine()) != null){
-					String[] connectionLineSplit = connectionLine.split(" ");
-					if(connectionLineSplit.length > 2){
-						String[] connectionChannels = new String[connectionLineSplit.length - 2];
-						for(int i = 2; i<connectionLineSplit.length; i++){
-							connectionChannels[i - 2] = connectionLineSplit[i];
-						}
+					if(!connectionLine.startsWith("#")){
+						String[] connectionLineSplit = connectionLine.split(" ");
+						if(connectionLineSplit.length > 2){
+							String[] connectionChannels = new String[connectionLineSplit.length - 2];
+							for(int i = 2; i<connectionLineSplit.length; i++){
+								connectionChannels[i - 2] = connectionLineSplit[i];
+							}
 
-						createConnection(connectionLineSplit[0], connectionChannels, connectionLineSplit[1], InputListenerType.CLAIRE);
+							createConnection(connectionLineSplit[0], connectionChannels, connectionLineSplit[1], InputListenerType.CLAIRE);
+						}
 					}
 				}
 				connectionsFileReader.close();

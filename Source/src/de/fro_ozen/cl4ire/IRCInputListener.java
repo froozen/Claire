@@ -54,7 +54,7 @@ public abstract class IRCInputListener {
 					handleJoinInput(channel, originUserName);
 				}
 				else{
-					writeMessage(channel, "My name is Cl4ire, i'm a chatbot made by fro_ozen.");
+					writeMessage(channel, MessageTemplates.formatMessage(MessageTemplates.introductionMessage, originUserName, channel, 0, null));
 				}
 
 			}

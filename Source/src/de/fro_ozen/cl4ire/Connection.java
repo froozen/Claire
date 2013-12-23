@@ -74,7 +74,7 @@ public class Connection extends Thread{
 
 			//Send out data needed for connection
 			connectionWriter.write("NICK " + nickName +"\r\n");
-			connectionWriter.write("USER " + MessageTemplates.introductionMessage + "\r\n");
+			connectionWriter.write("USER fro_ozen-bot localhost localhost : A IRC chatbot by fro_ozen\r\n");
 			connectionWriter.flush();
 
 			//Initial loop in order to finish connecting
