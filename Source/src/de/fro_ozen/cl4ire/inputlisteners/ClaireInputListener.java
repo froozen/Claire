@@ -56,8 +56,8 @@ public class ClaireInputListener extends IRCInputListener{
 		//Count unread messages
 		for(Message msg:MessageManager.getMessages(originUserName))if(msg.unread)messageCount++;
 
-		if(messageCount > 0) welcomeMessage = MessageTemplates.formatMessage(MessageTemplates.welcomeMessageNewMessages, originUserName, channel, messageCount, null);
-		else welcomeMessage = MessageTemplates.formatMessage(MessageTemplates.welcomeMessage, originUserName, channel, messageCount, null);
+		if(messageCount > 0) welcomeMessage = MessageTemplates.formatMessage(MessageTemplates.getWelcomeMessage(originUserName) + MessageTemplates.welcomeMessageNewMessages, originUserName, channel, messageCount, null);
+		else welcomeMessage = MessageTemplates.formatMessage(MessageTemplates.getWelcomeMessage(originUserName), originUserName, channel, messageCount, null);
 		
 		writeMessage(channel, welcomeMessage);
 

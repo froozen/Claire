@@ -24,6 +24,7 @@ public class ClaireCommandHandler {
 		commands.put("help", new HelpCommand());
 		commands.put("rm", new RemoveMessageCommand());
 		commands.put("ra", new RemoveAllCommand());
+		commands.put("welcomemsg", new SetWelcomeMsgCommand());
 
 		commandAbbreviations = new HashMap<String, String>();
 		commandAbbreviations.put("cm", "checkmessages");
