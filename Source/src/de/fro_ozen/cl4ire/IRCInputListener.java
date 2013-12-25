@@ -54,7 +54,7 @@ public abstract class IRCInputListener {
 					handleJoinInput(channel, originUserName);
 				}
 				else{
-					writeMessage(channel, MessageTemplates.formatMessage(MessageTemplates.introductionMessage, originUserName, channel, 0, null));
+					writeMessage(channel, MessageTemplates.formatMessage("introductionMessage", originUserName, channel, 0, null));
 				}
 
 			}

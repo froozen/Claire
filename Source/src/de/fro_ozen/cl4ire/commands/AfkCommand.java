@@ -15,7 +15,7 @@ public class AfkCommand extends BaseCommand{
 
 			if(UserManager.getUserChannels(originUserName) != null){
 				for(String channelName:UserManager.getUserChannels(originUserName)){
-					writeMessage(channelName, MessageTemplates.formatMessage(MessageTemplates.afkMessage, originUserName, channelName, 0, null), IRCWriter);
+					writeMessage(channelName, MessageTemplates.formatMessage("afkMessage", originUserName, channelName, 0, null), IRCWriter);
 				}
 			}
 		}
@@ -32,7 +32,7 @@ public class AfkCommand extends BaseCommand{
 
 			if(UserManager.getUserChannels(originUserName) != null){
 				for(String channelName:UserManager.getUserChannels(originUserName)){
-					writeMessage(channelName, MessageTemplates.formatMessage(MessageTemplates.afkMessage, originUserName, channelName, 0, afkMessage), IRCWriter);
+					writeMessage(channelName, MessageTemplates.formatMessage("afkMessage", originUserName, channelName, 0, afkMessage), IRCWriter);
 				}
 			}
 		}

@@ -37,13 +37,13 @@ public class ClaireInputListener extends IRCInputListener{
 					UserManager.setUserAfkMessage(originUserName, "");
 					if(UserManager.getUserChannels(originUserName) != null){
 						for(String channelName:UserManager.getUserChannels(originUserName)){
-							writeMessage(channelName, MessageTemplates.formatMessage(MessageTemplates.backMessage, originUserName, channel, 0, null));
+							writeMessage(channelName, MessageTemplates.formatMessage("backMessage", originUserName, channel, 0, null));
 						}
 					}
 					
 					int messageCount = 0;
 					for(Message msg:MessageManager.getMessages(originUserName))if(msg.unread)messageCount++;
-					if(messageCount > 0)writeMessage(originUserName, MessageTemplates.formatMessage(MessageTemplates.newMessagesMessage, originUserName, channel, messageCount, null));
+					if(messageCount > 0)writeMessage(originUserName, MessageTemplates.formatMessage("newMessagesMessage", originUserName, channel, messageCount, null));
 				}
 			}
 		}
@@ -56,8 +56,8 @@ public class ClaireInputListener extends IRCInputListener{
 		//Count unread messages
 		for(Message msg:MessageManager.getMessages(originUserName))if(msg.unread)messageCount++;
 
-		if(messageCount > 0) welcomeMessage = MessageTemplates.formatMessage(MessageTemplates.getWelcomeMessage(originUserName) + MessageTemplates.welcomeMessageNewMessages, originUserName, channel, messageCount, null);
-		else welcomeMessage = MessageTemplates.formatMessage(MessageTemplates.getWelcomeMessage(originUserName), originUserName, channel, messageCount, null);
+		if(messageCount > 0) welcomeMessage = MessageTemplates.formatMessage("welcomeMessageNewMessages", originUserName, channel, messageCount, null);
+		else welcomeMessage = MessageTemplates.formatMessage("welcomeMessage", originUserName, channel, messageCount, null);
 		
 		writeMessage(channel, welcomeMessage);
 
