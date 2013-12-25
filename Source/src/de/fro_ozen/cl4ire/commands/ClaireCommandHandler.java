@@ -17,7 +17,7 @@ public class ClaireCommandHandler {
 		commands = new HashMap<String, BaseCommand>();
 		commands.put("roll", new RollCommand());
 		commands.put("afk", new AfkCommand());
-		commands.put("invite", new InviteCommand());
+//		commands.put("invite", new InviteCommand());
 		commands.put("message", new MessageCommand());
 		commands.put("checkmessages", new CheckMessagesCommand());
 		commands.put("status", new StatusCommand());
