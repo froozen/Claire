@@ -145,6 +145,7 @@ public class MessageTemplates {
 				
 				for(String nick:welcomeMessages.keySet()){
 					welcomeMessageFileWriter.write(nick + " " + welcomeMessages.get(nick));
+					welcomeMessageFileWriter.newLine();
 				}
 				welcomeMessageFileWriter.close();
 			}
